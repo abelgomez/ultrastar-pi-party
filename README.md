@@ -18,7 +18,7 @@ This image requires an SD card of 4 GB as the bare minimum, but almost no space 
 
 2. Flash the downloaded image in an SD card using the "Use custom" option of the [Raspberry Pi Imager](https://www.raspberrypi.com/software/). 
 
-3. Put you newly flashed SD card in your Raspberry Pi, connect your microphones, **connect the HDMI-0 port (the HDMI port closest to the USB-C port)** to your screen, and power on your Raspberry Pi.
+3. Put your newly flashed SD card in your Raspberry Pi, connect your microphones, **connect the HDMI-0 port (the HDMI port closest to the USB-C port)** to your screen, and power on your Raspberry Pi.
 
     In this first boot, your Raspberry Pi will reboot several times (2 or 3 times, depending on the steps needed) while it auto-configures itself. **Please, be patient, and wait for Ultrastar WorldParty UI to launch.**
 
@@ -48,7 +48,7 @@ Make sure you are using the HDMI-0 port (the closest to the USB-C port).
 
 ### How can I add my own songs to Ultrastart WorldParty?
 
-The SD card will partitioned in three different partitions:
+The SD card should be partitioned in three different partitions:
 
 1. `bootfs`, a FAT32 Windows partition (256MB approx.) with the boot files.
 2. `rootfs`, an ext4 Linux partition (~3GB approx) with the base system files.
@@ -56,7 +56,7 @@ The SD card will partitioned in three different partitions:
 
 **Just put your Songs inside the `Ultrastar/Songs` directory in the `ultrastar` FAT32 partition.**
 
-**IMPORTANT:** You must start this image at least once in your Raspberry Pi to allow the Ultrastar partition to be resized to fit the whole SD card free space.
+**IMPORTANT:** You must boot this image at least once in your Raspberry Pi to allow the Ultrastar partition to be resized to fit the whole SD card free space.
 
 ### Can I safely delete the Ultrastar/.ultrastar-worldparty directory?
 
