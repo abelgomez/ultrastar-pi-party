@@ -1,0 +1,30 @@
+#! /bin/bash
+
+disk="/dev/mmcblk0"
+
+# Comment: we force a zero to ensure that an empty string is interpreted as numeric;
+# then, we force the conversion to base ten, since numbers starting with a zero are
+# interpreted as in octal
+free=$((10#0"$(LC_ALL=C parted $disk unit B print free | sed -n '/^ 3 .*/,$p' | sed -rn 's/^ +[[:digit:]]+B +[[:digit:]]+B +([[:digit:]]+)B +Free Space$/\1/p')"))
+
+if [ "$free" -lt 4096 ]; then
+  exit 0
+fi
+
+tty1-print -n "Extending SD Card partition... "
+
+disk_end="$(LC_ALL=C parted $disk unit B print | sed -rn 's/^Disk .+: ([[:digit:]]+)B$/\1/p')"
+part_start="$(LC_ALL=C parted $disk unit B print | sed -rn 's/^ +3 +([[:digit:]]+)B +[[:digit:]]+B +[[:digit:]]+B +primary +fat32.*$/\1/p')"
+
+new_size="$((disk_end - part_start))"
+
+fatresize -v -n 3 -s "$new_size" "$disk"
+
+ret=$?
+
+if [[ "$ret" -eq 0 ]]; then
+  tty1-print "Success!"
+else
+  tty1-print "Failure!"
+  exit $ret
+fi

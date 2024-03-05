@@ -1,0 +1,11 @@
+[Unit]
+Description=Mount SD Card
+
+[Mount]
+Where=/mnt/sdcard
+What=/dev/mmcblk0p3
+Type=vfat
+Options=defaults,utf8,umask=000
+
+[Install]
+WantedBy=multi-user.target

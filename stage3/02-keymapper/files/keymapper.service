@@ -1,0 +1,11 @@
+[Unit]
+Description=Keymapper client application
+Requires=keymapperd.service
+After=keymapperd.service
+
+[Service]
+User=ultrastar
+ExecStart=/usr/local/bin/keymapper
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,10 @@
+#! /bin/bash
+
+lock="/boot/shutdown.disabled"
+if [ -f "$lock" ]; then
+  exit 0
+fi
+
+tty1-print "Shutting system down..."
+sleep 2
+shutdown now

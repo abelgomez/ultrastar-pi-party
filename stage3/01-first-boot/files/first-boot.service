@@ -1,0 +1,20 @@
+[Unit]
+Description=First boot configuration
+Before=basic.target boot-message.service mnt-sdcard.mount
+After=local-fs.target sysinit.target
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+ExecStart=/bin/true
+ExecStartPost=-/usr/local/bin/tty1-print "Performing first-boot configuration, this may take a short while..."
+ExecStartPost=-/bin/sleep 2
+ExecStartPost=-/usr/bin/systemctl disable getty@tty1.service
+ExecStartPost=-/usr/bin/systemctl disable first-boot.service
+ExecStartPost=-/usr/lib/ultrastar-sys-mods/grow-sdcard
+ExecStartPost=-/usr/local/bin/tty1-print "Rebooting system..."
+ExecStartPost=-/bin/sleep 5
+ExecStartPost=-/sbin/reboot
+
+[Install]
+WantedBy=basic.target

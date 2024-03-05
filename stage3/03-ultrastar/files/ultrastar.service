@@ -1,0 +1,14 @@
+[Unit]
+Description=Ultrastar
+Requires=keymapper.service mnt-sdcard.mount
+After=keymapper.service mnt-sdcard.mount
+
+[Service]
+User=ultrastar
+WorkingDirectory=/mnt/sdcard/Ultrastar
+ExecStartPre=-!/usr/lib/ultrastar-sys-mods/check-mic-connected
+ExecStart=/usr/local/bin/WorldParty
+ExecStopPost=!/usr/lib/ultrastar-sys-mods/on-ultrastar-exit
+
+[Install]
+WantedBy=multi-user.target

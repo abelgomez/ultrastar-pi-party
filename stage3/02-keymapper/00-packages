@@ -1,0 +1,14 @@
+build-essential
+git
+cmake
+libudev1
+libusb-1.0-0
+libx11-6
+libdbus-1-3
+libxkbcommon0
+libudev-dev
+libusb-1.0-0-dev
+libx11-dev
+libdbus-1-dev
+libwayland-dev
+libxkbcommon-dev
