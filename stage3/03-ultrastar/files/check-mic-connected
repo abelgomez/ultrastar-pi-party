@@ -34,7 +34,7 @@ else
 
   timeout=10
   for ((i = $timeout; i >= 0; i--)); do
-    tty1-print -ne "Ultrastar will start in $timeout seconds...\033[0K\r"
+    tty1-print -ne "Ultrastar will start in $i seconds...\033[0K\r"
     sleep 1
   done
   tty1-print -e ""
