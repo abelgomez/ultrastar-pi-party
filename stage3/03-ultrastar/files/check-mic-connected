@@ -20,7 +20,7 @@ for ((i = 0; i < $count; i++)); do
   tty1-print -ne "\b$char"
   sleep 0.5
 done
-tty1-print -e " "
+tty1-print -e "\b "
 
 
 if [ "$found" -eq 1 ]; then
@@ -33,12 +33,8 @@ else
   tty1-print -e "Please consider connecting \e[0;31mat least one microphone\033[0m before starting Ultrastar."
 
   timeout=10
-  tty1-print -ne "Ultrastar will start in $timeout seconds... \b"
-  for ((i = $timeout - 1; i >= 0; i--)); do
-    str="$((i+1)) seconds..."
-    length=${#str}
-    for bkspc in $(seq 1 ${#str}); do tty1-print -ne "\b"; done
-    tty1-print -ne "$i seconds... \b"
+  for ((i = $timeout; i >= 0; i--)); do
+    tty1-print -ne "Ultrastar will start in $timeout seconds...\033[0K\r"
     sleep 1
   done
   tty1-print -e ""
