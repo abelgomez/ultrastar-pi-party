@@ -20,7 +20,7 @@ for ((i = 0; i < $count; i++)); do
   tty1-print -ne "\b$char"
   sleep 0.5
 done
-tty1-print -e " "
+tty1-print -e "\b "
 
 
 if [ "$found" -eq 1 ]; then
