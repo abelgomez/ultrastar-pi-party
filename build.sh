@@ -244,6 +244,8 @@ export GIT_HASH=${GIT_HASH:-"$(git rev-parse HEAD)"}
 
 export PUBKEY_SSH_FIRST_USER
 
+export DEFAULT_SONGS_DIR
+
 export CLEAN
 export IMG_NAME
 export APT_PROXY

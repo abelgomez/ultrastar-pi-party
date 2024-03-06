@@ -40,19 +40,22 @@ touch /boot/shutdown.enabled
 EOF
 
 # Setup SD-Card files
-on_chroot << EOF
-mkdir -p /mnt/sdcard/Ultrastar/.ultrastar-worldparty
-echo "[Directories]" > /mnt/sdcard/Ultrastar/.ultrastar-worldparty/config.ini
-echo "SongDir1=/mnt/sdcard/Ultrastar/Songs" >> /mnt/sdcard/Ultrastar/.ultrastar-worldparty/config.ini
-if [ ! -e /mnt/sdcard/Ultrastar/Songs ]; then
-    cd /mnt/sdcard/Ultrastar/
+mkdir -p "${ROOTFS_DIR}/mnt/sdcard/Ultrastar/.ultrastar-worldparty"
+echo "[Directories]" > "${ROOTFS_DIR}/mnt/sdcard/Ultrastar/.ultrastar-worldparty/config.ini"
+echo "SongDir1=/mnt/sdcard/Ultrastar/Songs" >> "${ROOTFS_DIR}/mnt/sdcard/Ultrastar/.ultrastar-worldparty/config.ini"
+
+pushd "${ROOTFS_DIR}/mnt/sdcard/Ultrastar/"
+rm -rf "Songs"
+if [ ! -z ${DEFAULT_SONGS_DIR} ] && [ -d ${DEFAULT_SONGS_DIR} ]; then
+    mkdir "Songs"
+    cp -r ${DEFAULT_SONGS_DIR}/* "Songs"
+else
     wget https://github.com/UltraStar-Deluxe/songs/archive/refs/heads/master.zip
     unzip -o master.zip
     mv "songs-master/Creative Commons" "Songs"
     rm -rf master.zip songs-master
 fi
-cd /
-EOF
+popd
 
 # Setup ultrastar user
 on_chroot << EOF
