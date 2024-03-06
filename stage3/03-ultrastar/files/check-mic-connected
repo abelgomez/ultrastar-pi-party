@@ -1,36 +1,48 @@
 #! /bin/bash
 
-tty1-print -n "Looking for microphones..."
+
+tty1-print -n "Looking for microphones...  "
 
 timeout=30
 found=0
-until [ "$timeout" -lt 0 ]; do
-  sleep 1
-  ((timeout-=1))
+count=$((timeout * 2))
+progress='-\|/'
+length=${#progress}
+
+for ((i = 0; i < $count; i++)); do
   mics=`arecord --list-devices | grep '^card' | wc -l`
   if [ "$mics" -gt 0 ]; then
     found=1;
     break;
-  else
-    tty1-print -n "."
-    continue;
   fi
+  pos=$((i % length))
+  char="${progress:pos:1}"
+  tty1-print -ne "\b$char"
+  sleep 0.5
 done
+tty1-print -e " "
 
-tty1-print ""
 
 if [ "$found" -eq 1 ]; then
   tty1-print -e "\e[0;32mSUCCESS\033[0m: $mics microphone(s) detected!"
-  tty1-print "Starting Ultrastar, please wait..."
+  tty1-print -e "Starting Ultrastar, please wait..."
   exit 0
 else
   tty1-print -e "\e[0;31mERROR\033[0m: No microphones detected!"
   tty1-print -e "Ultrastar may crash unexpectedly if no microphones are connected when playing a song."
   tty1-print -e "Please consider connecting \e[0;31mat least one microphone\033[0m before starting Ultrastar."
-  for i in `seq 10 -1 1` ; do
-    tty1-print -e "Ultrastar will start in $i seconds..."
+
+  timeout=10
+  tty1-print -ne "Ultrastar will start in $timeout seconds... \b"
+  for ((i = $timeout - 1; i >= 0; i--)); do
+    str="$((i+1)) seconds..."
+    length=${#str}
+    for bkspc in $(seq 1 ${#str}); do tty1-print -ne "\b"; done
+    tty1-print -ne "$i seconds... \b"
     sleep 1
   done
+  tty1-print -e ""
+
   tty1-print "Starting Ultrastar, please wait..."
   exit 1
 fi
