@@ -77,7 +77,7 @@ if [ "${NO_PRERUN_QCOW2}" = "0" ]; then
 	mkdir -p "${ROOTFS_DIR}/boot"
 	mount -v "$BOOT_DEV" "${ROOTFS_DIR}/boot" -t vfat
 	mkdir -p "${ROOTFS_DIR}/mnt/sdcard"
-	mount -v "$SDCARD_DEV" "${ROOTFS_DIR}/mnt/sdcard" -t vfat
+	mount -v "$SDCARD_DEV" "${ROOTFS_DIR}/mnt/sdcard" -t vfat -o utf8
 
 	rsync -aHAXx --exclude /var/cache/apt/archives --exclude /boot --exclude /mnt "${EXPORT_ROOTFS_DIR}/" "${ROOTFS_DIR}/"
 	rsync -rtx "${EXPORT_ROOTFS_DIR}/boot/" "${ROOTFS_DIR}/boot/"
